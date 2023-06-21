@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Codec";
+    src: url("../../../public/fonts/Codec-Cold-Bold-trial.ttf") format(TrueType);
+  }
+
+.bodyLogin{
+    background: #FFFFFF url("../../assets/bgLogin.png") right top no-repeat;
+    width: 100vw;
+    height: 100vh;
+    background-size: 100vw 100vh;
+    text-align: center;
+}
+
+.logoLogin{
+    position: absolute;
+    top: -20px;
+    left: -40px;
+}
+
+/* .buttonsLogin{
+    display: flex;
+} */
+
+.buttonsLogin button{
+    margin-left: 20px;
+    margin-right: 20px;
+    cursor:pointer
+}
+
+.contentLogin{
+    position: absolute;
+    top:50%;
+    left: 15%;
+    width: 60%;
+
+}
+
+h2{
+    font-family: 'Codec', sans-serif;
+}

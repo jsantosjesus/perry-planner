@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Codec";
+  src: url("../public/fonts/Codec-Cold-Bold-trial.ttf") format(TrueType);
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -7,7 +12,7 @@ body {
 }
 
 h1{
-  font-family: 'Roboto400', sans-serif;
+  font-family: 'Codec', sans-serif;
 }
 
 code {
