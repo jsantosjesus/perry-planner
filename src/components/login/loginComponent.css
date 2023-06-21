@@ -3,3 +3,9 @@
     width: 50%;
     height: 50%;
 }
+
+.errosYup{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    color: red;
+}
