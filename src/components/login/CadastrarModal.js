@@ -26,11 +26,11 @@ import React from 'react';
     .oneOf([Yup.ref('senha')], 'As senhas precisam ser iguais')
  });
 
-export const CadastrarModal = ({fechar}) =>{
+export const CadastrarModal = ({mudar}) =>{
     return(
-        <div className="bodyEntrarModal">
-     <h1>Signup</h1>
-     <Formik
+        <div className="form_main">
+     <p className="heading">Cadastrar-se</p>
+     <Formik 
        initialValues={{
          nome: '',
          cpf_cnpj: '',
@@ -47,28 +47,34 @@ export const CadastrarModal = ({fechar}) =>{
        }}
      >
        {({ errors, touched }) => (
-         <Form>
-           <Field name="nome" />
+         <Form >
+          <div className="content_form_main">
+           <Field name="nome" placeholder="Nome da empresa" className="inputField"/>
            {errors.nome && touched.nome ? (
              <div className='errosYup'>{errors.nome}</div>
-           ) : null}<br />
-           <Field name="cpf_cnpj" />
+           ) : null}
+           <Field name="cpf_cnpj" placeholder="CNPJ ou CPF" className="inputField"/>
            {errors.cpf_cnpj && touched.cpf_cnpj ? (
              <div className='errosYup'>{errors.cpf_cnpj}</div>
-           ) : null}<br />
-           <Field name="email" />
+           ) : null}
+           <Field name="email" className="inputField" placeholder="Digite seu email"/>
            {errors.email && touched.email ? (
              <div className='errosYup'>{errors.email}</div>
-           ) : null}<br />
-           <Field name="senha" type="password" />
-           {errors.senha && touched.senha ? <div className='errosYup'>{errors.senha}</div> : null}<br />
-           <Field name="confirmandoSenha" type="password" />
-           {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}<br />
-           <button type="submit">Submit</button>
+           ) : null}
+           <Field name="senha" type="password" className="inputField" placeholder="Sua senha"/>
+           {errors.senha && touched.senha ? <div className='errosYup'>{errors.senha}</div> : null}
+           <Field name="confirmandoSenha" type="password" className="inputField" placeholder= "Confirme a senha"/>
+           {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}
+           </div>
+           <button type="submit" id="button">Cadastrar-se</button>
+           
          </Form>
        )}
      </Formik>
-            <button onClick={fechar}>Fechar</button>
+     <div class="signupContainer">
+        <p>Já tem conta?</p>
+        <a onClick={mudar}>Entrar</a>
+    </div>
         </div>
     )
 }
