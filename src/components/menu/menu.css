@@ -1,0 +1,12 @@
+.bodyMenu{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100vw;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.bodyMenu div{
+    width: 33%;
+}
