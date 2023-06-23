@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Menu} from '../menu/index';
+import { Menu } from '../menu/index';
 import './listaDeContas.css';
 import { Contas } from '../../tables/conta';
 import { ModalPagamento } from '../modalPagamento';
@@ -7,7 +7,7 @@ import { ModalCompra } from '../modalCompra';
 import { EditarCliente } from '../editarCliente';
 import { ExcluirCliente } from '../excluirCliente';
 
-export const ListaDeContas = ({cliente, voltar}) =>{
+export const ListaDeContas = ({ cliente, voltar }) => {
     const contaEmAberto = Contas.filter((conta) => conta.status === "aberta")
     const valorTotal = contaEmAberto.map((conta) => (conta.total.toFixed(2).replace(".", ",")))
     const contas = Contas
@@ -16,26 +16,26 @@ export const ListaDeContas = ({cliente, voltar}) =>{
     const [editarModal, setEditarModal] = useState(false)
     const [excluirModal, setExcluirModal] = useState(false)
 
-    return(
-    <div className="bodyListaDeContas">
-        <Menu titulo={cliente.nome} funcaoEditar={() => setEditarModal(true)} funcaoExcluir={() => setExcluirModal(true)} voltar={voltar}/>
-        <div className="subMenuListaDeContas">
-            <button className='botaoPagamento' onClick={() => setPagamentoModal(true)}>Cadastrar pagamento</button>
-            <button onClick={() => setCompraModal(true)}>Cadastrar compra</button>
-        </div>
-        <div className='contentListaDeContas'>
-            {contas.map((conta) =>(
-                <div>
-                    <p>{conta.mes}</p>
-                    <p>{conta.total}</p>
-                </div>
-            ))}
-        </div>
+    return (
+        <div className="bodyListaDeContas">
+            <Menu titulo={cliente.nome} funcaoEditar={() => setEditarModal(true)} funcaoExcluir={() => setExcluirModal(true)} voltar={voltar} />
+            <div className="subMenuListaDeContas">
+                <button className='botaoPagamento' onClick={() => setPagamentoModal(true)}>Cadastrar pagamento</button>
+                <button onClick={() => setCompraModal(true)}>Cadastrar compra</button>
+            </div>
+            <div className='contentListaDeContas'>
+                {contas.map((conta) => (
+                    <div>
+                        <p>{conta.mes}</p>
+                        <p>{conta.total}</p>
+                    </div>
+                ))}
+            </div>
 
-        {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} />}
-        {compraModal && <ModalCompra fechar={() => setCompraModal(false)} />}
-        {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={cliente} />}
-        {excluirModal && <ExcluirCliente cliente={cliente} fechar={() => setExcluirModal(false)}/>}
-    </div>
+            {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} />}
+            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} />}
+            {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={cliente} />}
+            {excluirModal && <ExcluirCliente cliente={cliente} fechar={() => setExcluirModal(false)} />}
+        </div>
     );
 }

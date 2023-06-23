@@ -1,6 +1,6 @@
 export const Clientes = [
     {
-        id:1,
+        id: 1,
         nome: "João Cezar",
         cpf: "99999999999",
         telefone: "79 9 98807161",
@@ -9,7 +9,7 @@ export const Clientes = [
         numero: '135'
     },
     {
-        id:2,
+        id: 2,
         nome: "José Cristiano",
         cpf: "88888888888",
         telefone: "79 9 98871165",

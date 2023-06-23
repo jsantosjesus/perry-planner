@@ -4,7 +4,7 @@ import './home.css'
 import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
-import Button from 'react-bootstrap/Button';
+
 
 export const Home = () => {
     const arrayDeClientes = Clientes
@@ -18,8 +18,10 @@ export const Home = () => {
         let resultado = arrayDeClientes
 
         if (valorDaPesquisa) {
-            resultado = arrayDeClientes.filter((cliente) =>
-                cliente.nome.toLowerCase().includes(valorDaPesquisa.toLowerCase()))
+            resultado = arrayDeClientes.filter((cliente) => {
+                return cliente.nome.toLowerCase().includes(valorDaPesquisa.toLowerCase()) ||
+                    cliente.cpf.toLowerCase().includes(valorDaPesquisa.toLowerCase());
+            })
         }
         console.log(resultado)
 
@@ -30,31 +32,36 @@ export const Home = () => {
         filtrandoPorPesquisa();
     }, [valorDaPesquisa])
 
-    const teste = (cliente) =>{
+    const teste = (cliente) => {
         setPaginaDoCliente(cliente)
     }
 
 
     return (
         <div className="bodyHome">
-            <Menu titulo="Establecimento" home={true}/>
+
+            <Menu titulo="Estabelecimento" home={true} />
             <div className="subMenu">
                 <div className="pesquisa">
-                <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
+                    <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
                 </div>
                 <div className="adicionarCliente">
-                <Button variant="primary" onClick={() => setAdicionarModal(true)}>Adicionar cliente</Button>
+                    <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
                 </div>
             </div>
+            <div className="tituloListaClientes">
+                <p><b>Nome</b></p><p><b>CPF</b></p><p><b>Total</b></p>
+            </div>
             <div className="listaClientes">
-            {clientesPesquisados.map((cliente) => (
+                {clientesPesquisados.map((cliente) => (
                     <div onClick={() => teste(cliente)}>
                         <p>{cliente.nome}</p>
                     </div>
                 ))}
             </div>
             {paginaDoCliente && <ListaDeContas cliente={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
-                {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} />}
+            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} />}
+
         </div>
     )
 }
