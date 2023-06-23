@@ -1,7 +1,7 @@
 import './login.css'
 import logo from '../../assets/logo.png'
 import { useState } from 'react';
-import {EntrarModal} from '../../components/login/EntrarModal'
+import {EntrarModal} from '../../components/login/EntrarModal';
 import { CadastrarModal } from '../../components/login/CadastrarModal';
 
 export const Login = () => {
