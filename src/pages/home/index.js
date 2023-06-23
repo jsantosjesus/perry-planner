@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Menu } from '../../components/menu'
 import './home.css'
 import { Clientes } from "../../tables/clientes"
+import { ListaDeContas } from "../../components/ListaDeContas"
 
 export const Home = () => {
     const arrayDeClientes = Clientes
@@ -33,7 +34,7 @@ export const Home = () => {
 
     return (
         <div className="bodyHome">
-            <Menu titulo="Establecimento" />
+            <Menu titulo="Establecimento" home={true}/>
             <div className="subMenu">
                 <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
                 <p>{clientesPesquisados.map((cliente) => (
@@ -43,7 +44,7 @@ export const Home = () => {
                 ))}</p>
             </div>
             <div className="listaClientes">
-                {paginaDoCliente && <p>{paginaDoCliente.nome}</p>}
+                {paginaDoCliente && <ListaDeContas cliente={paginaDoCliente} />}
             </div>
         </div>
     )

@@ -3,16 +3,17 @@ import logo from '../../assets/logo.png';
 import '../../assets/logo.png';
 import './menu.css'
 
-export const Menu = ({titulo, icone, funcao}) =>{
+export const Menu = ({titulo, icone1, icone2, funcao, home=false}) =>{
     return(
     <div className="bodyMenu">
         <div className="logoMenu">
-            <img className="logoMenu" src={logo} alt="PerryPlanner" width='250px' height='125px'/>
+            {home && <img className="logoMenu" src={logo} alt="PerryPlanner" width='250px' height='125px'/>}
+            {!home && <><i src={icone1} /><i src={icone2} /></>}
             </div>
             <div className='tituloMenu'>
                 <h1>{titulo}</h1>
             </div>
-            <div className='iconeMenu'>
+            <div>
              
             </div>
 
