@@ -4,6 +4,7 @@
     left: 0;
     display: flex;
     width: 100vw;
+    height: 80px;
     background-color: white;
 
 }
@@ -19,7 +20,12 @@
     align-items: center;
 }
 
-.subMenu{
-    margin-top: 50vh;
+.logoMenu{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.logoMenu img{
+    width: 5vw;
 }
 

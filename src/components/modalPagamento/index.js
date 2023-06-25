@@ -1,4 +1,5 @@
 import './modalPagamento.css';
+import '../../styleGlobal/global.css'
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
  import * as Yup from 'yup';
@@ -11,6 +12,7 @@ export const ModalPagamento = ({dividaTotal, ultimaFatura, fechar}) =>{
     return(
         <div className='envolveModal'>
             <div className='modal'>
+                <h3>Cadastrar pagamento</h3>
                 <p>Dívida total: R${dividaTotal}</p>
                 <p>Última fatura: {ultimaFatura}</p>
                 <Formik 

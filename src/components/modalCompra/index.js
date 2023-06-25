@@ -1,4 +1,5 @@
 import './modalCompra.css';
+import '../../styleGlobal/global.css';
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
  import * as Yup from 'yup';

@@ -8,7 +8,7 @@ export const Menu = ({titulo, icone1, icone2, funcaoEditar, funcaoExcluir, volta
     return(
     <div className="bodyMenu">
         <div className="logoMenu">
-            {home && <img className="logoMenu" src={logo} alt="PerryPlanner" width='250px' height='125px'/>}
+            {home && <img className="logoMenu" src={logo} alt="PerryPlanner" />}
             {!home && <p onClick={voltar}><AiOutlineLeft /></p>}
             </div>
             <div className='tituloMenu'>

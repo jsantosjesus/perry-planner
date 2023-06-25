@@ -19,3 +19,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button{
+  cursor: pointer;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  background-color: #260e69;
+  border: #260e69;
+  color: white;
+  padding: 10px;
+}
+
+button:hover{
+  opacity: 0.8;
+}

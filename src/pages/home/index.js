@@ -38,18 +38,22 @@ export const Home = () => {
         <div className="bodyHome">
             <Menu titulo="Establecimento" home={true}/>
             <div className="subMenu">
+                <div className="pesquisa">
                 <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
+                </div>
+                <div className="adicionarCliente">
                 <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
+                </div>
             </div>
             <div className="listaClientes">
-            <p>{clientesPesquisados.map((cliente) => (
+            {clientesPesquisados.map((cliente) => (
                     <div onClick={() => teste(cliente)}>
                         <p>{cliente.nome}</p>
                     </div>
-                ))}</p>
-                {paginaDoCliente && <ListaDeContas cliente={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
-                {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} />}
+                ))}
             </div>
+            {paginaDoCliente && <ListaDeContas cliente={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
+                {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} />}
         </div>
     )
 }

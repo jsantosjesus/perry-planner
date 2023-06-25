@@ -5,3 +5,53 @@
     width: 100vw;
     height: 100vh;
 }
+
+
+.subMenu{
+    margin-top: 90px;
+    padding-top: 10px;
+    display: flex;
+    width: 100vw;
+}
+
+.pesquisa{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+}
+
+.pesquisa input{
+    width: 80%;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #a6a6a6;
+    border: #a6a6a6;
+}
+
+.adicionarCliente{
+    width: 40%;
+    justify-content: end;
+    display: flex;
+}
+
+.adicionarCliente button{
+    margin-right: 3vw;
+}
+
+.listaClientes{
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.listaClientes div{
+    background-color: white;
+    width: 100vw;
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.listaClientes div:hover{
+    background-color: #a6a6a6;
+}
