@@ -1,4 +1,4 @@
-import './modalPagamento.css';
+import './modalCompra.css';
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
  import * as Yup from 'yup';
@@ -7,12 +7,11 @@ import { Formik, Form, Field } from 'formik';
     valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
   });
 
-export const ModalPagamento = ({dividaTotal, ultimaFatura, fechar}) =>{
+export const ModalCompra = ({fechar}) =>{
     return(
         <div className='envolveModal'>
             <div className='modal'>
-                <p>Dívida total: R${dividaTotal}</p>
-                <p>Última fatura: {ultimaFatura}</p>
+                <h3>Cadastre uma compra</h3>
                 <Formik 
        initialValues={{
          valor: null,
@@ -27,7 +26,7 @@ export const ModalPagamento = ({dividaTotal, ultimaFatura, fechar}) =>{
      >
        {({ errors, touched }) => (
          <Form > 
-                <Field name='valor' type='number' placeholder='Valor do pagamento' />
+                <Field name='valor' type='number' placeholder='Valor da compra' />
                 {errors.valor && touched.valor ? (
              <div className='errosYup'>{errors.valor}</div>
            ) : null}
