@@ -25,19 +25,19 @@ import React from 'react';
    .max(10, 'Número muito grande')
  });
 
-export const EditarCliente = ({fechar, cliente}) =>{
+export const AdicionarCliente = ({fechar}) =>{
     return(
         <div className='envolveModal'>
         <div className="modal">
-     <h3>Editar {cliente.nome}</h3>
+     <h3>Adicionar novo cliente</h3>
      <Formik 
        initialValues={{
-         nome: cliente.nome,
-         cpf_cnpj: cliente.cpf,
-         telefone: cliente.telefone,
-         bairro: cliente.bairro,
-         rua: cliente.rua,
-         numero: cliente.numero,
+         nome: '',
+         cpf_cnpj: '',
+         telefone: '',
+         bairro: '',
+         rua: '',
+         numero: '',
 
          
 
@@ -70,7 +70,7 @@ export const EditarCliente = ({fechar, cliente}) =>{
            <Field name="numero" type="text" placeholder= "Digite o numero da casa" />
            {errors.numero && touched.numero ? <div className='errosYup'>{errors.numero}</div> : null}
            </div>
-           <button type="submit" id="button">Cadastrar-se</button>
+           <button type="submit" id="button">Cadastrar cliente</button>
            
          </Form>
        )}
