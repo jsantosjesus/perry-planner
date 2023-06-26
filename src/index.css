@@ -23,7 +23,7 @@ code {
 button{
   cursor: pointer;
   letter-spacing: 1px;
-  border-radius: 30px;
+  border-radius: 10px;
   background-color: #260e69;
   border: #260e69;
   color: white;

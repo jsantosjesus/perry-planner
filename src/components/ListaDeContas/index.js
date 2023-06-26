@@ -19,16 +19,11 @@ export const ListaDeContas = ({cliente, voltar}) =>{
     return(
     <div className="bodyListaDeContas">
         <Menu titulo={cliente.nome} funcaoEditar={() => setEditarModal(true)} funcaoExcluir={() => setExcluirModal(true)} voltar={voltar}/>
-        <div className="subMenu">
-            <div>
-
-            </div>
-            <div>
-                <button onClick={() => setPagamentoModal(true)}>Pagar</button>
-                <button onClick={() => setCompraModal(true)}>Cadastrar compra</button>
-            </div>
+        <div className="subMenuListaDeContas">
+            <button className='botaoPagamento' onClick={() => setPagamentoModal(true)}>Cadastrar pagamento</button>
+            <button onClick={() => setCompraModal(true)}>Cadastrar compra</button>
         </div>
-        <div className='content'>
+        <div className='contentListaDeContas'>
             {contas.map((conta) =>(
                 <div>
                     <p>{conta.mes}</p>

@@ -4,6 +4,7 @@ import './home.css'
 import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
+import Button from 'react-bootstrap/Button';
 
 export const Home = () => {
     const arrayDeClientes = Clientes
@@ -42,7 +43,7 @@ export const Home = () => {
                 <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
                 </div>
                 <div className="adicionarCliente">
-                <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
+                <Button variant="primary" onClick={() => setAdicionarModal(true)}>Adicionar cliente</Button>
                 </div>
             </div>
             <div className="listaClientes">
