@@ -47,10 +47,20 @@ export const CadastrarModal = ({ mudar }) => {
         validationSchema={SignupSchema}
         onSubmit={values => {
           // same shape as initial values
-          console.log(values);
+          const valores = {
+            nome: values.nome,
+            cpf_cnpj: values.cpf_cnpj,
+            email: values.email,
+            senha: values.senha,
+            telefone: values.telefone,
+            bairro: values.bairro,
+            rua: values.rua,
+            numero: values.numero,
+          }
+          console.log(valores)
           axios.post(
             `http://localhost:3333/usuarios`,
-            values)
+            valores)
             .then(response => {
               console.log(response)
               localStorage.setItem('usuarioLogado', JSON.stringify(response));
@@ -77,7 +87,7 @@ export const CadastrarModal = ({ mudar }) => {
               ) : null}
               <Field name="senha" type="password" className="inputField" placeholder="Sua senha" />
               {errors.senha && touched.senha ? <div className='errosYup'>{errors.senha}</div> : null}
-              <Field name="confirmandoSenha" type="password" className="inputField" placeholder="Confirme a senha" />
+              <Field name='confirmandoSenha' type="password" className="inputField" placeholder="Confirme a senha" />
               {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}
             </div>
             <button type="submit" id="button">Cadastrar-se</button>
