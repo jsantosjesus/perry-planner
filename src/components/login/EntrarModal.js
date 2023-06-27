@@ -31,6 +31,7 @@ export const EntrarModal = ({ mudar }) => {
             values)
             .then(response => {
               console.log(response);
+              localStorage.setItem('usuarioLogado', JSON.stringify(response));
             })
             .error(response => {
               console.log(response);

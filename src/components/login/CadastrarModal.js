@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './loginComponent.css';
+import axios from 'axios';
 
 const SignupSchema = Yup.object().shape({
   nome: Yup.string()
@@ -36,7 +37,10 @@ export const CadastrarModal = ({ mudar }) => {
           cpf_cnpj: '',
           email: '',
           senha: '',
-          confirmandoSenha: '',
+          telefone: '99999999',
+          bairro: 'maria do carmo',
+          rua: 'antonio',
+          numero: '467',
 
 
         }}
@@ -44,6 +48,16 @@ export const CadastrarModal = ({ mudar }) => {
         onSubmit={values => {
           // same shape as initial values
           console.log(values);
+          axios.post(
+            `http://localhost:3333/usuarios`,
+            values)
+            .then(response => {
+              console.log(response)
+              localStorage.setItem('usuarioLogado', JSON.stringify(response));
+            })
+            .error(response =>{
+              console.log(response)
+            })
         }}
       >
         {({ errors, touched }) => (
