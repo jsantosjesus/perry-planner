@@ -29,3 +29,12 @@
     width: 5vw;
 }
 
+.iconesControleMenu{
+    display: flex;
+    justify-content: end;
+}
+
+.iconesControleMenu path{
+    margin-left: 20px;
+    cursor: pointer;
+}

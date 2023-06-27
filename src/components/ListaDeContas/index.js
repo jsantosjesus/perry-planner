@@ -6,6 +6,11 @@ import { ModalPagamento } from '../modalPagamento';
 import { ModalCompra } from '../modalCompra';
 import { EditarCliente } from '../editarCliente';
 import { ExcluirCliente } from '../excluirCliente';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import { AiFillCaretDown } from "react-icons/ai";
 
 export const ListaDeContas = ({ cliente, voltar }) => {
     const contaEmAberto = Contas.filter((conta) => conta.status === "aberta")
@@ -25,10 +30,20 @@ export const ListaDeContas = ({ cliente, voltar }) => {
             </div>
             <div className='contentListaDeContas'>
                 {contas.map((conta) => (
-                    <div>
-                        <p>{conta.mes}</p>
-                        <p>{conta.total}</p>
-                    </div>
+                    <Accordion>
+                    <AccordionSummary
+                      expandIcon={<AiFillCaretDown />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className="tituloConta"><p className='mesTituloConta'>{conta.mes}</p><p className='statusTituloConta'>{conta.status}</p><p className='totalTituloConta'>R${conta.total.toFixed(2).replace(".", ",")}</p></Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography id='movimentosConta'>
+                        <p className='nomeMovimentosConta'>Pagamento</p><p className='dataMovimentosConta'>25/05/2023</p><p className='valorMovimentosConta'>R$225,00</p>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
                 ))}
             </div>
 

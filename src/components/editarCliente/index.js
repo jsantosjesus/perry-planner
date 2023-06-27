@@ -70,12 +70,12 @@ export const EditarCliente = ({ fechar, cliente }) => {
                 <Field name="numero" type="text" placeholder="Digite o numero da casa" />
                 {errors.numero && touched.numero ? <div className='errosYup'>{errors.numero}</div> : null}
               </div>
-              <button type="submit" id="button">Editar</button>
+              <button className='botaoConfirmar' type="submit">Editar</button>
 
             </Form>
           )}
         </Formik>
-        <button onClick={fechar}>Fechar</button>
+        <button className='botaoFechar' onClick={fechar}>Fechar</button>
       </div>
     </div>
   )

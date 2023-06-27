@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Menu } from '../../components/menu'
-import './home.css'
+import './home.css';
+import '../../styleGlobal/responsividade.css'
 import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
@@ -46,11 +47,12 @@ export const Home = () => {
                     <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
                 </div>
                 <div className="adicionarCliente">
-                    <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
+                    <button className="showDesktop" onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
+                    <button className="showMobile" onClick={() => setAdicionarModal(true)}>  +  </button>
                 </div>
             </div>
             <div className="tituloListaClientes">
-                <p><b>Nome</b></p><p><b>CPF</b></p><p><b>Total</b></p>
+                <p><b>Nome</b></p><p><b>CPF</b></p>
             </div>
             <div className="listaClientes">
                 {clientesPesquisados.map((cliente) => (

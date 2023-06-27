@@ -33,3 +33,14 @@ button{
 button:hover{
   opacity: 0.8;
 }
+
+.botaoFechar, .botaoConfirmar{
+  margin-top: 10px;
+  width: 60%;
+}
+
+.botaoFechar{
+  background-color: transparent;
+  color: #260e69;
+  border: solid 1px #260e69;
+}

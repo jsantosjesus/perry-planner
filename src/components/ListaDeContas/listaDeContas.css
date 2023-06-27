@@ -32,15 +32,34 @@
     margin-top: 20px;
 }
 
-.contentListaDeContas div{
+/* .contentListaDeContas div{
     width: 100vw;
-    display: flex;
     padding-top:10px;
     padding-bottom: 10px;
     background-color: white;
     margin-top: 5px;
+} */
+
+/* .contentListaDeContas div:hover{
+    background-color: #a6a6a6;
+} */
+
+.tituloConta, #movimentosConta{
+    display: flex;
 }
 
-.contentListaDeContas div:hover{
-    background-color: #a6a6a6;
+#movimentosConta{
+    letter-spacing: 0.0em;
+}
+
+.statusTituloConta, .totalTituloConta{
+    margin-left: 20vw;
+}
+
+.dataMovimentosConta, .valorMovimentosConta{
+    margin-left: 20%;
+}
+
+#movimentosConta{
+    background-color: #818181;
 }
