@@ -2,6 +2,8 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './loginComponent.css';
+import axios from 'axios';
+import { baseUrl } from '../../config/api';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Email invalido').required('O email é obrigatório'),
@@ -24,6 +26,15 @@ export const EntrarModal = ({ mudar }) => {
         onSubmit={values => {
           // same shape as initial values
           console.log(values);
+          axios.post(
+            `http://localhost:3333/usuarios/login`,
+            values)
+            .then(response => {
+              console.log(response);
+            })
+            .error(response => {
+              console.log(response);
+            }) 
         }}
       >
         {({ errors, touched }) => (
