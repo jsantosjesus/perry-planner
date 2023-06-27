@@ -31,12 +31,12 @@ export const ModalCompra = ({ fechar }) => {
               {errors.valor && touched.valor ? (
                 <div className='errosYup'>{errors.valor}</div>
               ) : null}
-              <button type="submit">Confirmar</button>
+              <button className="botaoConfirmar" type="submit">Confirmar</button>
             </Form>
           )}
         </Formik>
 
-        <button onClick={fechar}>fechar</button>
+        <button className='botaoFechar' onClick={fechar}>fechar</button>
       </div>
     </div>
   )

@@ -44,3 +44,20 @@ button:hover{
   color: #260e69;
   border: solid 1px #260e69;
 }
+
+.showMobile{
+  display: none;
+}
+
+@media (max-width: 600px){
+  h1{
+    font-size: 25px;
+  }
+  .showDesktop{
+    display: none;
+}
+
+.showMobile{
+    display: block;
+}
+}

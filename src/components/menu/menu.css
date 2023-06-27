@@ -20,13 +20,10 @@
     align-items: center;
 }
 
-.logoMenu{
+.logoMenu img, .logoMenu svg{
+    width: 5vw;
     margin-top: 10px;
     margin-left: 10px;
-}
-
-.logoMenu img{
-    width: 5vw;
 }
 
 .iconesControleMenu{

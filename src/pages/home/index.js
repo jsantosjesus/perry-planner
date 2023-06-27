@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Menu } from '../../components/menu'
 import './home.css';
-import '../../styleGlobal/responsividade.css'
 import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";

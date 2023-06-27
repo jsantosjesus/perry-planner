@@ -33,12 +33,12 @@ export const ModalPagamento = ({ dividaTotal, ultimaFatura, fechar }) => {
               {errors.valor && touched.valor ? (
                 <div className='errosYup'>{errors.valor}</div>
               ) : null}
-              <button type="submit">Confirmar</button>
+              <button type="submit" className="botaoConfirmar">Confirmar</button>
             </Form>
           )}
         </Formik>
 
-        <button onClick={fechar}>fechar</button>
+        <button onClick={fechar} className="botaoFechar">fechar</button>
       </div>
     </div>
   )
