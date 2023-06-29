@@ -3,14 +3,14 @@
     top:0;
     left: 0;
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: 80px;
     background-color: white;
 
 }
 
 .bodyMenu div{
-    width: 33%;
+    width: 32%;
 }
 
 .tituloMenu{
@@ -26,9 +26,18 @@
     margin-left: 10px;
 }
 
+.iconeEditarCliente{
+    margin-right: 20px;
+}
+
+
 .iconesControleMenu{
     display: flex;
     justify-content: end;
+}
+
+.iconesControleMenu{
+    font-size: 15px;
 }
 
 .iconesControleMenu path{

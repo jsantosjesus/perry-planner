@@ -53,8 +53,8 @@
     margin-left: 20vw;
 }
 
-#dataMovimentosConta, #valorMovimentosConta{
-    margin-left: 20%;
+#nomeMovimentosConta, #dataMovimentosConta, #valorMovimentosConta{
+    width: 32%
 }
 
 #movimentosConta{

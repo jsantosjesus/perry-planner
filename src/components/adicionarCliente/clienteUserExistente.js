@@ -10,7 +10,7 @@ const SignupSchema = Yup.object().shape({
         .max(30, 'Precisa ser uma data do mês')
 });
 
-export const ClienteUserExistente = ({ cliente, fechar=()=>{} }) => {
+export const ClienteUserExistente = ({ cliente, fechar=()=>{}, carregandoClientes=()=>{}}) => {
     const [carregando, setCarregando] = useState(false);
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     return (
@@ -36,7 +36,8 @@ export const ClienteUserExistente = ({ cliente, fechar=()=>{} }) => {
                     api.post(("/clientes"), valores, {headers: {'Authorization': usuarioLogado.token}}).
                     then((response) =>{
                         setCarregando(false);
-                        fechar(); 
+                        carregandoClientes();
+                        fechar();
                     }).
                     cacth((err) =>{
                         setCarregando(false);

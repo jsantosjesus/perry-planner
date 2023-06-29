@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
     const contaEmAberto = clienteEmpresa.contas//.filter((conta) => conta.status === "aberta") 
     const valorTotal = contaEmAberto.map((conta) => (conta.totalSemJuros.toFixed(2).replace(".", ",")))
-    const contas = clienteEmpresa.contas;
+    const [contas, setContas] = useState(clienteEmpresa.contas);
     const [pagamentoModal, setPagamentoModal] = useState(false)
     const [compraModal, setCompraModal] = useState(false)
     const [editarModal, setEditarModal] = useState(false)
@@ -32,23 +32,37 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
           return numero;
         }
 
-      const atualizarContas = () =>{
+       const atualizarCliente =() =>{
+
+       } 
+
+
+      const atualizarMovimentos = () =>{
+        // console.log("executou")
+        // console.log(contas)
       contas.map((conta) => {
+        // console.log("chamando get")
         api.get(`/movimentos/${conta.id}`, {headers: {'Authorization': usuarioLogado.token}}).
         then((response) =>{       
+          // console.log(response)
           let linhas = document.getElementById(`movimento-${conta.id}`);
+          if (!linhas){
+            return;
+          }
           linhas.innerHTML = "";
+          conta.totalSemJuros = 0;
           response.data.map((movimento) =>{
             let data = new Date(movimento.createdAt)
             let negativo; 
               if(movimento.tipo === "PAGAMENTO"){
                 negativo = "-"
+                conta.totalSemJuros -= movimento.valor;
               }
               else{
                 negativo = "+"
+                conta.totalSemJuros += movimento.valor;
               }
-            
-
+          
             return(
             linhas.innerHTML+=`<Typography id='movimentosConta'>
             <p id='nomeMovimentosConta'>${movimento.tipo}</p><p id='dataMovimentosConta'>${adicionaZero(data.getDate().toString())}/${adicionaZero(data.getMonth()+1)}/${data.getFullYear()}</p><p id='valorMovimentosConta'>${negativo}R$${movimento.valor.toFixed(2).replace('.', ',')}</p>
@@ -63,13 +77,17 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
           <p id='nomeMovimentosConta'>JUROS</p><p id='dataMovimentosConta'></p><p id='valorMovimentosConta'>+R$${conta.juros.toFixed(2).replace('.', ',')}</p>
         </Typography>`
         }
+
+        document.getElementById(`total-${conta.id}`).innerHTML="R$ " + (conta.totalSemJuros + conta.juros).toFixed(2).replace(".", ",")
         })
       })
     }
 
     useEffect(() =>{
-      atualizarContas();
+      atualizarMovimentos();
     }, [])
+
+    
 
     return (
         <div className="bodyListaDeContas">
@@ -97,7 +115,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
                   }
 
                   const movimentoConta = `movimento-${conta.id}`;
-                  
+                  const totalConta = `total-${conta.id}`;
 
                   return(
                     <Accordion>
@@ -106,7 +124,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography className="tituloConta"><p className='mesTituloConta'>{conta.mesReferente}</p><p className='statusTituloConta'>{situacao}</p><p className='totalTituloConta'>R${total.toFixed(2).replace(".", ",")}</p></Typography>
+                      <Typography className="tituloConta"><p className='mesTituloConta'>{conta.mesReferente}</p><p className='statusTituloConta'>{situacao}</p><p className='totalTituloConta' id={totalConta}></p></Typography>
                     </AccordionSummary>
                     <AccordionDetails id={movimentoConta}>
                     </AccordionDetails>
@@ -115,7 +133,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
             </div>
 
             {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId = {clienteEmpresa.cliente.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token}/>}
-            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId = {clienteEmpresa.cliente.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarContas={atualizarContas}/>}
+            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId = {clienteEmpresa.cliente.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos}/>}
             {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token}/>}
             {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
         </div>

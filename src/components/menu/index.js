@@ -20,7 +20,7 @@ export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, volt
                 <h1>{titulo}</h1>
             </div>
             <div className='iconesControleMenu'>
-                {!home && <><p onClick={funcaoEditar}><AiOutlineForm /></p><p onClick={funcaoExcluir}><AiOutlineDelete /></p></>}
+                {!home && <><p onClick={funcaoEditar}><AiOutlineForm className='iconeEditarCliente'/></p><p onClick={funcaoExcluir}><AiOutlineDelete /></p></>}
                 {home && <p alt="Sair" onClick={handleLogout}><BsBoxArrowInRight /></p>}
             </div>
 

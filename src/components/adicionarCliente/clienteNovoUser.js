@@ -28,7 +28,7 @@ const SignupSchema = Yup.object().shape({
         .max(10, 'Número muito grande')
 });
 
-export const ClienteNovoUser = ({ CPF, fechar=()=>{} }) => {
+export const ClienteNovoUser = ({ CPF, fechar=()=>{}, carregandoClientes=()=>{} }) => {
     const [carregando, setCarregando] =useState(false);
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     return (
@@ -62,6 +62,7 @@ export const ClienteNovoUser = ({ CPF, fechar=()=>{} }) => {
                         console.log(response)
                         setCarregando(false);
                         fechar(); 
+                        carregandoClientes();
                     }).
                     cacth((err) =>{
                         setCarregando(false);

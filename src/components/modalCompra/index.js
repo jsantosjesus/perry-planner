@@ -1,5 +1,4 @@
 import './modalCompra.css';
-import '../../styleGlobal/global.css';
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -10,7 +9,7 @@ const SignupSchema = Yup.object().shape({
   valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
 });
 
-export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarContas=()=>{} }) => {
+export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos=()=>{} }, atualizarContas=()=>{}) => {
  const [carregando, setCarregando] = useState(false);
   return (
     <div className='envolveModal'>
@@ -37,7 +36,7 @@ export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaI
               console.log(response)
               setCarregando(false)
               fechar();
-              atualizarContas();
+              atualizarMovimentos();
             }
             ).
             error((err) =>{

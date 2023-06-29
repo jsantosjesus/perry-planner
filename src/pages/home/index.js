@@ -82,7 +82,7 @@ export const Home = () => {
                 ))}
             </div>
             {paginaDoCliente && <ListaDeContas clienteEmpresa={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
-            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} />}
+            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes}/>}
 
         </div>
     )
