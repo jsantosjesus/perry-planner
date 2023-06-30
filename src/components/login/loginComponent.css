@@ -144,6 +144,10 @@
 	display: none;
 }
 
+.erro{
+  color: red;
+}
+
 @media(max-width: 684px){
     .form_main {
         position: absolute;

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './loginComponent.css';
 import axios from 'axios';
+import api from '../../config/api';
+import { Context } from '../../Context/AuthContext';
 
 const SignupSchema = Yup.object().shape({
   nome: Yup.string()
@@ -24,10 +26,32 @@ const SignupSchema = Yup.object().shape({
   confirmandoSenha:
     Yup.string()
       .required('Confirme sua senha')
-      .oneOf([Yup.ref('senha')], 'As senhas precisam ser iguais')
+      .oneOf([Yup.ref('senha')], 'As senhas precisam ser iguais'),
+  telefone:
+    Yup.string()
+      .min(3, 'numero muito pequeno!')
+      .max(50, 'numero muito longo!')
+      .required('telefone é obrigatorio'),
+  bairro:
+    Yup.string()
+      .min(3, 'nome muito pequeno!')
+      .max(50, 'nome muito longo!')
+      .required('Bairro é obrigatorio'),
+  rua:
+    Yup.string()
+      .min(3, 'nome muito pequeno!')
+      .max(50, 'nome muito longo!')
+      .required('Rua é obrigatorio'),
+  numero:
+    Yup.string()
+      .max(10, 'numero muito longo!')
+      .required('numero da casa é obrigatorio')
 });
 
 export const CadastrarModal = ({ mudar }) => {
+  const { authenticated, handleLogin } = useContext(Context);
+  const [carregando, setCarregando] = useState(false)
+
   return (
     <div className="form_main">
       <p className="heading">Cadastrar-se</p>
@@ -37,16 +61,17 @@ export const CadastrarModal = ({ mudar }) => {
           cpf_cnpj: '',
           email: '',
           senha: '',
-          telefone: '99999999',
-          bairro: 'maria do carmo',
-          rua: 'antonio',
-          numero: '467',
+          telefone: '',
+          bairro: '',
+          rua: '',
+          numero: '',
 
 
         }}
         validationSchema={SignupSchema}
         onSubmit={values => {
           // same shape as initial values
+          setCarregando(true);
           const valores = {
             nome: values.nome,
             cpf_cnpj: values.cpf_cnpj,
@@ -57,15 +82,20 @@ export const CadastrarModal = ({ mudar }) => {
             rua: values.rua,
             numero: values.numero,
           }
-          console.log(valores)
-          axios.post(
-            `http://localhost:3333/usuarios`,
+
+          api.post(
+            `https://perry-planner.onrender.com/usuarios`,
             valores)
             .then(response => {
               console.log(response)
+              setCarregando(false)
               localStorage.setItem('usuarioLogado', JSON.stringify(response));
+              handleLogin();
+              api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+
             })
-            .error(response =>{
+            .error(response => {
+              setCarregando(false);
               console.log(response)
             })
         }}
@@ -81,6 +111,22 @@ export const CadastrarModal = ({ mudar }) => {
               {errors.cpf_cnpj && touched.cpf_cnpj ? (
                 <div className='errosYup'>{errors.cpf_cnpj}</div>
               ) : null}
+              <Field name="telefone" placeholder="Digite seu telefone" className="inputField" />
+              {errors.telefone && touched.telefone ? (
+                <div className='errosYup'>{errors.telefone}</div>
+              ) : null}
+              <Field name="bairro" placeholder="Seu bairro" className="inputField" />
+              {errors.bairro && touched.bairro ? (
+                <div className='errosYup'>{errors.bairro}</div>
+              ) : null}
+              <Field name="rua" placeholder="Sua rua" className="inputField" />
+              {errors.rua && touched.rua ? (
+                <div className='errosYup'>{errors.rua}</div>
+              ) : null}
+              <Field name="numero" placeholder="o numero da casa" className="inputField" />
+              {errors.numero && touched.numero ? (
+                <div className='errosYup'>{errors.numero}</div>
+              ) : null}
               <Field name="email" className="inputField" placeholder="Digite seu email" />
               {errors.email && touched.email ? (
                 <div className='errosYup'>{errors.email}</div>
@@ -90,7 +136,8 @@ export const CadastrarModal = ({ mudar }) => {
               <Field name='confirmandoSenha' type="password" className="inputField" placeholder="Confirme a senha" />
               {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}
             </div>
-            <button type="submit" id="button">Cadastrar-se</button>
+            {!carregando && <button type="submit" id="button">Cadastre-se</button>}
+            {carregando && <button id="button">carregando...</button>}
 
           </Form>
         )}
@@ -99,6 +146,7 @@ export const CadastrarModal = ({ mudar }) => {
         <p>Já tem conta?</p>
         <a onClick={mudar}>Entrar</a>
       </div>
+
     </div>
   )
 }

@@ -1,10 +1,12 @@
 import './login.css'
-import logo from '../../assets/logo.png'
 import { useState } from 'react';
 import {EntrarModal} from '../../components/login/EntrarModal';
 import { CadastrarModal } from '../../components/login/CadastrarModal';
+import React from 'react';
 
 export const Login = () => {
+    
+
     const [modalEntrar, setModalEntrar] = useState(true)
     const [modalCadastrar, setModalCadastrar] = useState(false)
 
@@ -19,7 +21,6 @@ export const Login = () => {
 
     return(
         <div className="bodyLogin">
-            <img className="logoLogin" src={logo} alt="PerryPlanner" width='250px' height='125px'/>
             {modalEntrar && <EntrarModal mudar={abrirCadastrar}/>}
             {modalCadastrar && <CadastrarModal mudar={abrirEntrar}/>}
         </div>

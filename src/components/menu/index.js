@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import logo from '../../assets/logo.png';
 import '../../assets/logo.png';
 import './menu.css';
 import { AiOutlineForm, AiOutlineDelete, AiOutlineLeft } from "react-icons/ai";
 import {BsBoxArrowInRight} from "react-icons/bs";
+import { Context } from '../../Context/AuthContext';
 
 
 export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, voltar, home = false }) => {
+    const {handleLogout } = useContext(Context);
     return (
         <div className="bodyMenu">
             <div className="logoMenu">
@@ -19,7 +21,7 @@ export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, volt
             </div>
             <div className='iconesControleMenu'>
                 {!home && <><p onClick={funcaoEditar}><AiOutlineForm /></p><p onClick={funcaoExcluir}><AiOutlineDelete /></p></>}
-                {home && <p alt="Sair"><BsBoxArrowInRight /></p>}
+                {home && <p alt="Sair" onClick={handleLogout}><BsBoxArrowInRight /></p>}
             </div>
 
         </div>

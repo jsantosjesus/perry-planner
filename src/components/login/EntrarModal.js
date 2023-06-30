@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './loginComponent.css';
 import axios from 'axios';
-import { baseUrl } from '../../config/api';
+import api, { baseUrl } from '../../config/api';
+import { Context } from '../../Context/AuthContext';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email('Email invalido').required('O email é obrigatório'),
@@ -12,9 +13,14 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const EntrarModal = ({ mudar }) => {
+  const { authenticated, handleLogin } = useContext(Context);
+  const [erro, setErro] = useState(false);
+  const [carregando, setCarregando] = useState(false)
+
   return (
     <div className="form_main">
       <p className="heading">Entrar</p>
+      {erro && <p className='erro'>usuário e senha invalidos</p>}
       <Formik
         initialValues={{
           email: '',
@@ -23,18 +29,23 @@ export const EntrarModal = ({ mudar }) => {
 
         }}
         validationSchema={SignupSchema}
-        onSubmit={values => {
-          // same shape as initial values
+        onSubmit={async values => {
           console.log(values);
-          axios.post(
-            `http://localhost:3333/usuarios/login`,
+          setCarregando(true);
+          setErro(false);
+          await api.post(
+            `https://perry-planner.onrender.com/usuarios/login`,
             values)
             .then(response => {
               console.log(response);
+              setCarregando(false);
               localStorage.setItem('usuarioLogado', JSON.stringify(response));
+              handleLogin();
             })
-            .error(response => {
-              console.log(response);
+            .catch(response => {
+              console.log("erro");
+              setErro(true);
+              setCarregando(false);
             }) 
         }}
       >
@@ -48,7 +59,8 @@ export const EntrarModal = ({ mudar }) => {
               <Field name="senha" type="password" className="inputField" placeholder="Sua senha" />
               {errors.senha && touched.senha ? <div className='errosYup'>{errors.senha}</div> : null}
             </div>
-            <button type="submit" id="button">Entrar</button>
+            {!carregando && <button type="submit" id="button">Entrar</button>}
+            {carregando && <button id="button">carregando...</button>}
 
           </Form>
         )}
@@ -57,6 +69,7 @@ export const EntrarModal = ({ mudar }) => {
         <p>Ainda não possui conta?</p>
         <a onClick={mudar}>Cadastre-se</a>
       </div>
+      
     </div>
   )
 }
