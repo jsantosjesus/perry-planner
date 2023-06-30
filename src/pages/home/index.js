@@ -23,7 +23,6 @@ export const Home = () => {
                     cliente.cpf.toLowerCase().includes(valorDaPesquisa.toLowerCase());
             })
         }
-        console.log(resultado)
 
         setClientesPesquisados(resultado)
     }
@@ -36,11 +35,14 @@ export const Home = () => {
         setPaginaDoCliente(cliente)
     }
 
+    const usuarioLogado = localStorage.getItem('usuarioLogado');
+    const user = JSON.parse(usuarioLogado).data.nome;
+    const id = JSON.parse(usuarioLogado).data.id;
 
     return (
         <div className="bodyHome">
 
-            <Menu titulo="Estabelecimento" home={true} />
+            <Menu titulo={user} home={true} />
             <div className="subMenu">
                 <div className="pesquisa">
                     <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
