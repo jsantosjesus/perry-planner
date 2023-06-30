@@ -34,7 +34,7 @@ export const EntrarModal = ({ mudar }) => {
           setCarregando(true);
           setErro(false);
           await api.post(
-            `https://perry-planner.onrender.com/usuarios/login`,
+            `/usuarios/login`,
             values)
             .then(response => {
               console.log(response);

@@ -84,7 +84,7 @@ export const CadastrarModal = ({ mudar }) => {
           }
 
           api.post(
-            `https://perry-planner.onrender.com/usuarios`,
+            `/usuarios`,
             valores)
             .then(response => {
               console.log(response)
