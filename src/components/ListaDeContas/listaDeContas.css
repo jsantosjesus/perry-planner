@@ -48,9 +48,6 @@
     display: flex;
 }
 
-#movimentosConta{
-    letter-spacing: 0.0em;
-}
 
 .statusTituloConta, .totalTituloConta{
     margin-left: 20vw;
@@ -63,4 +60,5 @@
 #movimentosConta{
     background-color: #d9d9d9;
     padding: 5px;
+    letter-spacing: 0.0em;
 }

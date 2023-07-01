@@ -4,10 +4,32 @@ import './home.css';
 import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
+import api from "../../config/api";
 
 
 export const Home = () => {
-    const arrayDeClientes = Clientes
+    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    const user = usuarioLogado.nome;
+    const id = usuarioLogado.id;
+    const [arrayDeClientes, setArrayDeClientes] = useState([]);
+    console.log(usuarioLogado.token)
+
+    
+        const carregandoClientes = () =>{api.get(`/clientes/${id}`, {headers: {'Authorization': usuarioLogado.token}}).
+            then((response) => { 
+                if(!response)return;
+                console.log(response.data)
+                setArrayDeClientes(response.data)
+                setClientesPesquisados(response.data)
+            
+            }).
+            catch(response => alert("Erro ao carregar a lista de clientes," + response))}
+  
+            useEffect(() =>{
+                carregandoClientes();
+            }, [])
+           
+
     const [paginaDoCliente, setPaginaDoCliente] = useState(null);
     const [adicionarModal, setAdicionarModal] = useState(false);
 
@@ -18,9 +40,9 @@ export const Home = () => {
         let resultado = arrayDeClientes
 
         if (valorDaPesquisa) {
-            resultado = arrayDeClientes.filter((cliente) => {
-                return cliente.nome.toLowerCase().includes(valorDaPesquisa.toLowerCase()) ||
-                    cliente.cpf.toLowerCase().includes(valorDaPesquisa.toLowerCase());
+            resultado = arrayDeClientes.filter((clienteEmpresa) => {
+                return clienteEmpresa.cliente.nome.toLowerCase().includes(valorDaPesquisa.toLowerCase()) ||
+                    clienteEmpresa.cliente.cpf_cnpj.toLowerCase().includes(valorDaPesquisa.toLowerCase());
             })
         }
 
@@ -31,13 +53,9 @@ export const Home = () => {
         filtrandoPorPesquisa();
     }, [valorDaPesquisa])
 
-    const teste = (cliente) => {
+    const abrindoContasModal = (cliente) => {
         setPaginaDoCliente(cliente)
     }
-
-    const usuarioLogado = localStorage.getItem('usuarioLogado');
-    const user = JSON.parse(usuarioLogado).data.nome;
-    const id = JSON.parse(usuarioLogado).data.id;
 
     return (
         <div className="bodyHome">
@@ -56,13 +74,14 @@ export const Home = () => {
                 <p><b>Nome</b></p><p><b>CPF</b></p>
             </div>
             <div className="listaClientes">
-                {clientesPesquisados.map((cliente) => (
-                    <div onClick={() => teste(cliente)}>
-                        <p>{cliente.nome}</p>
+                {clientesPesquisados.map((clienteEmpresa) => (
+                    <div onClick={() => abrindoContasModal(clienteEmpresa)}>
+                        <p>{clienteEmpresa.cliente.nome}</p>
+                        <p>{clienteEmpresa.cliente.cpf_cnpj}</p>
                     </div>
                 ))}
             </div>
-            {paginaDoCliente && <ListaDeContas cliente={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
+            {paginaDoCliente && <ListaDeContas clienteEmpresa={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
             {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} />}
 
         </div>

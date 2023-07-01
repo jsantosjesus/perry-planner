@@ -39,7 +39,7 @@ export const EntrarModal = ({ mudar }) => {
             .then(response => {
               console.log(response);
               setCarregando(false);
-              localStorage.setItem('usuarioLogado', JSON.stringify(response));
+              localStorage.setItem('usuarioLogado', JSON.stringify(response.data));
               handleLogin();
             })
             .catch(response => {

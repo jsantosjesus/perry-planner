@@ -89,9 +89,9 @@ export const CadastrarModal = ({ mudar }) => {
             .then(response => {
               console.log(response)
               setCarregando(false)
-              localStorage.setItem('usuarioLogado', JSON.stringify(response));
+              localStorage.setItem('usuarioLogado', JSON.stringify(response.data));
               handleLogin();
-              api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+              // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
 
             })
             .error(response => {

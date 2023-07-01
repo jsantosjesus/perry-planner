@@ -12,7 +12,7 @@ export default function useAuth() {
     const usuarioLogado = localStorage.getItem('usuarioLogado');
 
     if (usuarioLogado) {
-      api.defaults.headers.Authorization = `Bearer ${JSON.parse(usuarioLogado)}`;
+      // api.defaults.headers.Authorization = `Bearer ${JSON.parse(usuarioLogado)}`;
       setAuthenticated(true);
     }
 
