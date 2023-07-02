@@ -24,19 +24,47 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
     const [editarModal, setEditarModal] = useState(false)
     const [excluirModal, setExcluirModal] = useState(false)
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+    const hoje = Date.parse(new Date());
+
+    const adicionaZero =(numero) => {
+      if (numero <= 9) 
+          return "0" + numero;
+      else
+          return numero;
+        }
 
     
       contas.map((conta) => {
         api.get(`/movimentos/${conta.id}`, {headers: {'Authorization': usuarioLogado.token}}).
         then((response) =>{
-          console.log(response)
+          console.log(response)        
           let linhas = document.getElementById(`movimento-${conta.id}`);
           linhas.innerHTML = "";
           response.data.map((movimento) =>{
+            let data = new Date(movimento.createdAt)
+            let negativo; 
+              if(movimento.tipo === "PAGAMENTO"){
+                negativo = "-"
+              }
+              else{
+                negativo = "+"
+              }
+            
+
+            return(
             linhas.innerHTML+=`<Typography id='movimentosConta'>
-            <p className='nomeMovimentosConta'>${movimento.tipo}</p><p className='dataMovimentosConta'>${movimento.createdAt}</p><p className='valorMovimentosConta'>${movimento.valor}</p>
-          </Typography>`
+            <p id='nomeMovimentosConta'>${movimento.tipo}</p><p id='dataMovimentosConta'>${adicionaZero(data.getDate().toString())}/${adicionaZero(data.getMonth()+1)}/${data.getFullYear()}</p><p id='valorMovimentosConta'>${negativo}R$${movimento.valor.toFixed(2).replace('.', ',')}</p>
+          </Typography>`)
           })
+          linhas.innerHTML+=`<Typography id='movimentosConta'>
+          <p id='nomeMovimentosConta'>TOTAL  (sem juros)</p><p id='dataMovimentosConta'></p><p id='valorMovimentosConta'>=R$${conta.totalSemJuros.toFixed(2).replace('.', ',')}</p>
+        </Typography>`
+
+        if(conta.juros > 0){
+          linhas.innerHTML+=`<Typography id='movimentosConta'>
+          <p id='nomeMovimentosConta'>JUROS</p><p id='dataMovimentosConta'></p><p id='valorMovimentosConta'>+R$${conta.juros.toFixed(2).replace('.', ',')}</p>
+        </Typography>`
+        }
         })
       })
     
@@ -50,9 +78,24 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
             </div>
             <div className='contentListaDeContas'>
                 {contas.map((conta) => {
-                  
+                  let total = conta.totalSemJuros + conta.juros;
+                  let dataFechamento = Date.parse(new Date(conta.dataFechamento));
+                  let situacao;
+                  if(conta.juros>0 && conta.estaPaga === false){
+                    situacao = "VENCIDA";
+                  }
+                  else if(dataFechamento > hoje){
+                    situacao = "ABERTA"
+                  }
+                  else if(conta.estaPaga === true){
+                    situacao = "PAGA"
+                  }
+                  else{
+                    situacao = "FECHADA"
+                  }
 
                   const movimentoConta = `movimento-${conta.id}`;
+                  
 
                   return(
                     <Accordion>
@@ -61,10 +104,9 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
-                      <Typography className="tituloConta"><p className='mesTituloConta'>{conta.mes}</p><p className='statusTituloConta'>{conta.status}</p><p className='totalTituloConta'>R${conta.totalSemJuros.toFixed(2).replace(".", ",")}</p></Typography>
+                      <Typography className="tituloConta"><p className='mesTituloConta'>{conta.mesReferente}</p><p className='statusTituloConta'>{situacao}</p><p className='totalTituloConta'>R${total.toFixed(2).replace(".", ",")}</p></Typography>
                     </AccordionSummary>
                     <AccordionDetails id={movimentoConta}>
-                      
                     </AccordionDetails>
                   </Accordion>
                 )})}
