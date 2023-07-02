@@ -15,7 +15,6 @@ import api from '../../config/api';
 import { useEffect } from 'react';
 
 export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
-  console.log(clienteEmpresa)
     const contaEmAberto = clienteEmpresa.contas//.filter((conta) => conta.status === "aberta") 
     const valorTotal = contaEmAberto.map((conta) => (conta.totalSemJuros.toFixed(2).replace(".", ",")))
     const contas = clienteEmpresa.contas;
@@ -36,8 +35,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
     
       contas.map((conta) => {
         api.get(`/movimentos/${conta.id}`, {headers: {'Authorization': usuarioLogado.token}}).
-        then((response) =>{
-          console.log(response)        
+        then((response) =>{       
           let linhas = document.getElementById(`movimento-${conta.id}`);
           linhas.innerHTML = "";
           response.data.map((movimento) =>{
@@ -112,8 +110,8 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
                 )})}
             </div>
 
-            {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} />}
-            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} />}
+            {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId = {clienteEmpresa.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token}/>}
+            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId = {clienteEmpresa.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token}/>}
             {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} />}
             {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
         </div>
