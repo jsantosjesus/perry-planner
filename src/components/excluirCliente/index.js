@@ -18,7 +18,7 @@ export const ExcluirCliente = ({ fechar=()=>{}, cliente }) => {
         <div className="envolveModal">
             <div className="modal">
                 <h3>Tem certeza que quer excluir {cliente.nome}</h3>
-                <button onClick={confirmarExcluir}>Sim</button>
+                <button>Sim</button>
                 <button onClick={fechar}>Não</button>
             </div>
 
