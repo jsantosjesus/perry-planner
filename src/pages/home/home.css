@@ -38,11 +38,6 @@
     margin-right: 3vw;
 }
 
-.listaClientes{
-    max-height: 70vh;
-    overflow-x: auto;
-}
-
 .listaClientes div{
     background-color: white;
     width: 100vw;
