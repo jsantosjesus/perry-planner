@@ -32,7 +32,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
           return numero;
         }
 
-    
+      const atualizarContas = () =>{
       contas.map((conta) => {
         api.get(`/movimentos/${conta.id}`, {headers: {'Authorization': usuarioLogado.token}}).
         then((response) =>{       
@@ -65,7 +65,11 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
         }
         })
       })
-    
+    }
+
+    useEffect(() =>{
+      atualizarContas();
+    }, [])
 
     return (
         <div className="bodyListaDeContas">
@@ -111,8 +115,8 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
             </div>
 
             {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId = {clienteEmpresa.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token}/>}
-            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId = {clienteEmpresa.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token}/>}
-            {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} />}
+            {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId = {clienteEmpresa.id} empresaId = {usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarContas={atualizarContas}/>}
+            {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token}/>}
             {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
         </div>
     );
