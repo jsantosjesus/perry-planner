@@ -60,3 +60,9 @@
     width: 50%;
     text-align: center;
 }
+
+@media (max-width: 600px){
+    .botaoAdicionar{
+        font-size: 10px;
+    }
+}

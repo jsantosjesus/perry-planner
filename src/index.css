@@ -82,6 +82,19 @@ button:hover {
   background-color: #d9d9d9;
 }
 
+#divCarregando{
+  width: 100%;
+  height: 70vh;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.botaoSimNao{
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
 @media (max-width: 600px) {
   h1 {
     font-size: 25px;

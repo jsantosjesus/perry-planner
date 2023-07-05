@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import './loginComponent.css';
-import axios from 'axios';
 import api from '../../config/api';
 import { Context } from '../../Context/AuthContext';
 
@@ -87,7 +86,6 @@ export const CadastrarModal = ({ mudar }) => {
             `/usuarios`,
             valores)
             .then(response => {
-              console.log(response)
               setCarregando(false)
               localStorage.setItem('usuarioLogado', JSON.stringify(response.data));
               handleLogin();
@@ -96,7 +94,6 @@ export const CadastrarModal = ({ mudar }) => {
             })
             .error(response => {
               setCarregando(false);
-              console.log(response)
             })
         }}
       >
@@ -137,7 +134,7 @@ export const CadastrarModal = ({ mudar }) => {
               {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}
             </div>
             {!carregando && <button type="submit" id="button">Cadastre-se</button>}
-            {carregando && <button id="button">carregando...</button>}
+            {carregando && <button id="button" style={{backgroundColor: "#818181"}}>carregando...</button>}
 
           </Form>
         )}

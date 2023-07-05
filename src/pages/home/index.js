@@ -5,6 +5,9 @@ import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
 import api from "../../config/api";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import { SairModal } from "../../components/sairModal";
 
 
 export const Home = () => {
@@ -12,23 +15,29 @@ export const Home = () => {
     const user = usuarioLogado.nome;
     const id = usuarioLogado.id;
     const [arrayDeClientes, setArrayDeClientes] = useState([]);
-    console.log(usuarioLogado.token)
-
+    const [carregando, setCarregando] = useState(true);
+    const [sairModal, setSairModal] = useState(false);
     
-        const carregandoClientes = () =>{api.get(`/clientes/${id}`, {headers: {'Authorization': usuarioLogado.token}}).
-            then((response) => { 
-                if(!response)return;
-                console.log(response.data)
-                setArrayDeClientes(response.data)
-                setClientesPesquisados(response.data)
-            
-            }).
-            catch(response => alert("Erro ao carregar a lista de clientes," + response))}
-  
-            useEffect(() =>{
-                carregandoClientes();
-            }, [])
-           
+
+
+    const carregandoClientes = () => {
+        api.get(`/clientes/${id}`, { headers: { 'Authorization': usuarioLogado.token } }).
+        then((response) => {
+            if (!response) return;
+            setArrayDeClientes(response.data)
+            setClientesPesquisados(response.data)
+            setCarregando(false)
+        }).
+        catch(response => {
+            alert("Erro ao carregar a lista de clientes," + response)
+            setCarregando(false)
+        })
+    }
+
+    useEffect(() => {
+        carregandoClientes();
+    }, [])
+
 
     const [paginaDoCliente, setPaginaDoCliente] = useState(null);
     const [adicionarModal, setAdicionarModal] = useState(false);
@@ -59,30 +68,34 @@ export const Home = () => {
 
     return (
         <div className="bodyHome">
-
-            <Menu titulo={user} home={true} />
+            <Menu titulo={user} home={true} abrirSairModal={() =>{setSairModal(true)}} />
             <div className="subMenu">
                 <div className="pesquisa">
                     <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
                 </div>
                 <div className="adicionarCliente">
-                    <button className="showDesktop" onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
-                    <button className="showMobile" onClick={() => setAdicionarModal(true)}>  +  </button>
+                    <button className="botaoAdicionar" onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
                 </div>
             </div>
             <div className="tituloListaClientes">
                 <p><b>Nome</b></p><p><b>CPF</b></p>
             </div>
-            <div className="listaClientes">
+            {!carregando && !paginaDoCliente && <div className="listaClientes">
                 {clientesPesquisados.map((clienteEmpresa) => (
                     <div onClick={() => abrindoContasModal(clienteEmpresa)}>
                         <p>{clienteEmpresa.cliente.nome}</p>
                         <p>{clienteEmpresa.cliente.cpf_cnpj}</p>
                     </div>
                 ))}
-            </div>
+            </div> 
+            }
+            {carregando &&
+                <Box sx={{ display: 'flex' }} id="divCarregando">
+                    <CircularProgress />
+                </Box>}
             {paginaDoCliente && <ListaDeContas clienteEmpresa={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
-            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes}/>}
+            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes} />}
+            {sairModal && <SairModal fechar={() =>{setSairModal(false)}}/>}
 
         </div>
     )

@@ -60,7 +60,7 @@ export const EntrarModal = ({ mudar }) => {
               {errors.senha && touched.senha ? <div className='errosYup'>{errors.senha}</div> : null}
             </div>
             {!carregando && <button type="submit" id="button">Entrar</button>}
-            {carregando && <button id="button">carregando...</button>}
+            {carregando && <button id="button" style={{backgroundColor: "#818181"}}>carregando...</button>}
 
           </Form>
         )}

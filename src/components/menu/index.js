@@ -7,8 +7,11 @@ import {BsBoxArrowInRight} from "react-icons/bs";
 import { Context } from '../../Context/AuthContext';
 
 
-export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, voltar, home = false }) => {
+export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, voltar, home = false, abrirSairModal }) => {
     const {handleLogout } = useContext(Context);
+
+    let tituloCurto = titulo.split(' ', 2).join(' ')
+
     return (
         <div className="bodyMenu">
             <div className="logoMenu">
@@ -17,11 +20,11 @@ export const Menu = ({ titulo, icone1, icone2, funcaoEditar, funcaoExcluir, volt
                 {!home && <p onClick={voltar}><AiOutlineLeft /></p>}
             </div>
             <div className='tituloMenu'>
-                <h1>{titulo}</h1>
+                <h1>{tituloCurto}</h1>
             </div>
             <div className='iconesControleMenu'>
                 {!home && <><p onClick={funcaoEditar}><AiOutlineForm className='iconeEditarCliente'/></p><p onClick={funcaoExcluir}><AiOutlineDelete /></p></>}
-                {home && <p alt="Sair" onClick={handleLogout}><BsBoxArrowInRight /></p>}
+                {home && <p alt="Sair" onClick={abrirSairModal}><BsBoxArrowInRight /></p>}
             </div>
 
         </div>
