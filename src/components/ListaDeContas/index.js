@@ -135,7 +135,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
       </div>
 
       {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} />}
-      {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} />}
+      {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} contas={contas} />}
       {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token} />}
       {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
       

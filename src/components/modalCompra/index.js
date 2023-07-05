@@ -9,8 +9,8 @@ const SignupSchema = Yup.object().shape({
   valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
 });
 
-export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos=()=>{} }, atualizarContas=()=>{}) => {
- const [carregando, setCarregando] = useState(false);
+export const ModalCompra = ({ fechar = () => { }, autorizacao, clienteId, empresaId, atualizarMovimentos = () => { }, contas }) => {
+  const [carregando, setCarregando] = useState(false);
   return (
     <div className='envolveModal'>
       <div className='modal'>
@@ -31,19 +31,24 @@ export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaI
               descricao: values.descricao
             }
             setCarregando(true)
-            api.post("/movimentos", parametros, {headers: {'Authorization': autorizacao}}).
-            then((response)=>{
-              console.log(response)
-              setCarregando(false)
-              fechar();
-              atualizarMovimentos();
-            }
-            ).
-            error((err) =>{
-              console.log(err.data.mensage)
-              setCarregando(false)
-            }
-            )
+            api.post("/movimentos", parametros, { headers: { 'Authorization': autorizacao } }).
+              then((response) => {
+                console.log(response)
+                setCarregando(false)
+                fechar();
+
+                if (contas.filter(c => c.id == response.data.contaId).length == 0) {
+                  window.location.reload()
+                } else {
+                  atualizarMovimentos();
+                }
+              }
+              ).
+              error((err) => {
+                console.log(err.data.mensage)
+                setCarregando(false)
+              }
+              )
           }}
         >
           {({ errors, touched }) => (
@@ -54,13 +59,13 @@ export const ModalCompra = ({ fechar = () =>{}, autorizacao, clienteId, empresaI
               ) : null}
               <Field name='descricao' type='text' placeholder='Descricao' />
               {!carregando && <button className="botaoConfirmar" type="submit">Confirmar</button>}
-              {carregando && <button className="botaoConfirmar" style={{backgroundColor: "#818181"}}>Carregando...</button>}
+              {carregando && <button className="botaoConfirmar" style={{ backgroundColor: "#818181" }}>Carregando...</button>}
             </Form>
           )}
         </Formik>
 
         <button className='botaoFechar' onClick={fechar}>fechar</button>
-        
+
       </div>
     </div>
   )
