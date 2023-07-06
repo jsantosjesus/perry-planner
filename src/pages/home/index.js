@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Menu } from '../../components/menu'
 import './home.css';
-import { Clientes } from "../../tables/clientes"
 import { ListaDeContas } from "../../components/ListaDeContas";
 import { AdicionarCliente } from "../../components/adicionarCliente";
 import api from "../../config/api";
@@ -17,21 +16,21 @@ export const Home = () => {
     const [arrayDeClientes, setArrayDeClientes] = useState([]);
     const [carregando, setCarregando] = useState(true);
     const [sairModal, setSairModal] = useState(false);
-    
+
 
 
     const carregandoClientes = () => {
         api.get(`/clientes/${id}`, { headers: { 'Authorization': usuarioLogado.token } }).
-        then((response) => {
-            if (!response) return;
-            setArrayDeClientes(response.data)
-            setClientesPesquisados(response.data)
-            setCarregando(false)
-        }).
-        catch(response => {
-            alert("Erro ao carregar a lista de clientes," + response)
-            setCarregando(false)
-        })
+            then((response) => {
+                if (!response) return;
+                setArrayDeClientes(response.data)
+                setClientesPesquisados(response.data)
+                setCarregando(false)
+            }).
+            catch(response => {
+                alert("Erro ao carregar a lista de clientes," + response)
+                setCarregando(false)
+            })
     }
 
     useEffect(() => {
@@ -68,7 +67,7 @@ export const Home = () => {
 
     return (
         <div className="bodyHome">
-            <Menu titulo={user} home={true} abrirSairModal={() =>{setSairModal(true)}} />
+            <Menu titulo={user} home={true} abrirSairModal={() => { setSairModal(true) }} />
             <div className="subMenu">
                 <div className="pesquisa">
                     <input type="text" placeholder="Pesquise por nome, CPF ou CNPJ" onChange={(e) => setValorDaPesquisa(e.target.value)} />
@@ -87,15 +86,22 @@ export const Home = () => {
                         <p>{clienteEmpresa.cliente.cpf_cnpj}</p>
                     </div>
                 ))}
-            </div> 
+            </div>
             }
             {carregando &&
                 <Box sx={{ display: 'flex' }} id="divCarregando">
                     <CircularProgress />
                 </Box>}
+
+            {arrayDeClientes.length === 0 &&
+                <div className="semClientes">
+                    <p>Você ainda nâo tem nenhum cliente cadastrado</p>
+                    <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>
+                </div>
+            }
             {paginaDoCliente && <ListaDeContas clienteEmpresa={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
             {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes} />}
-            {sairModal && <SairModal fechar={() =>{setSairModal(false)}}/>}
+            {sairModal && <SairModal fechar={() => { setSairModal(false) }} />}
 
         </div>
     )

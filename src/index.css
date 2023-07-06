@@ -52,7 +52,7 @@ button:hover {
 }
 
 .envolveModal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -68,7 +68,7 @@ button:hover {
   border-radius: 20px;
   width: 50%;
   margin-left: 25%;
-  margin-top: 20vh;
+
   text-align: center;
   padding: 30px;
 }

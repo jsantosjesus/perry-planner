@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Menu } from '../menu/index';
 import './listaDeContas.css';
-import { Contas } from '../../tables/conta';
 import { ModalPagamento } from '../modalPagamento';
 import { ModalCompra } from '../modalCompra';
 import { EditarCliente } from '../editarCliente';
@@ -13,6 +12,9 @@ import Typography from '@mui/material/Typography';
 import { AiFillCaretDown } from "react-icons/ai";
 import api from '../../config/api';
 import { useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 
 export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
   const contaEmAberto = clienteEmpresa.contas//.filter((conta) => conta.status === "aberta") 
@@ -30,10 +32,6 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
       return "0" + numero;
     else
       return numero;
-  }
-
-  const atualizarCliente = () => {
-
   }
 
 
@@ -134,11 +132,11 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
 
       </div>
 
-      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} />}
+      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} />}
       {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} contas={contas} />}
       {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token} />}
       {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
-      
+
     </div>
   );
 }

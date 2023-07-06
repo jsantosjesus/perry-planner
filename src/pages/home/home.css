@@ -61,6 +61,13 @@
     text-align: center;
 }
 
+.semClientes{
+    margin-top: 80px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 600px){
     .botaoAdicionar{
         font-size: 10px;
