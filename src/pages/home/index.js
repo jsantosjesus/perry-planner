@@ -93,7 +93,7 @@ export const Home = () => {
                     <CircularProgress />
                 </Box>}
 
-            {arrayDeClientes.length === 0 &&
+            {arrayDeClientes.length === 0 && !carregando &&
                 <div className="semClientes">
                     <p>Você ainda nâo tem nenhum cliente cadastrado</p>
                     <button onClick={() => setAdicionarModal(true)}>Adicionar cliente</button>

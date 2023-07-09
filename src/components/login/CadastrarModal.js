@@ -134,7 +134,7 @@ export const CadastrarModal = ({ mudar }) => {
               {errors.confirmandoSenha && touched.confirmandoSenha ? <div className='errosYup'>{errors.confirmandoSenha}</div> : null}
             </div>
             {!carregando && <button type="submit" id="button">Cadastre-se</button>}
-            {carregando && <button id="button" style={{backgroundColor: "#818181"}}>carregando...</button>}
+            {carregando && <button id="button" style={{backgroundColor: "#818181", borderColor: "#818181"}}>carregando...</button>}
 
           </Form>
         )}

@@ -9,14 +9,14 @@ const SignupSchema = Yup.object().shape({
   valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
 });
 
-export const ModalPagamento = ({ dividaTotal, ultimaFatura, fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos }) => {
+export const ModalPagamento = ({ dividaTotal, totalFechadas, fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos }) => {
   const [carregando, setCarregando] = useState(false);
   return (
     <div className='envolveModal'>
       <div className='modal'>
         <h3>Cadastrar pagamento</h3>
-        <p>Dívida total: R${dividaTotal}</p>
-        <p>Última fatura: {ultimaFatura}</p>
+        <p>Dívida total: R$ {dividaTotal.toFixed(2).replace(".", ",")}</p>
+        <p>Última fatura: R$ {totalFechadas.toFixed(2).replace(".", ",")}</p>
         <Formik
           initialValues={{
             valor: null,

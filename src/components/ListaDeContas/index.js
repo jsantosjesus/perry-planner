@@ -17,15 +17,19 @@ import Box from '@mui/material/Box';
 
 
 export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
+  const hoje = Date.parse(new Date());
   const contaEmAberto = clienteEmpresa.contas//.filter((conta) => conta.status === "aberta") 
-  const valorTotal = contaEmAberto.map((conta) => (conta.totalSemJuros.toFixed(2).replace(".", ",")))
+  const valorTotal = contaEmAberto.map((conta) => conta.totalSemJuros)
+    .reduce((acumulador, valor) => acumulador + valor, 0)
+  const fechadas = contaEmAberto.filter(conta => Date.parse(conta.dataFechamento) < hoje);
+  const valorFechadas = fechadas.reduce((soma, conta) => soma + conta.juros + conta.totalSemJuros, 0);
   const [contas, setContas] = useState(clienteEmpresa.contas);
   const [pagamentoModal, setPagamentoModal] = useState(false)
   const [compraModal, setCompraModal] = useState(false)
   const [editarModal, setEditarModal] = useState(false)
   const [excluirModal, setExcluirModal] = useState(false)
   const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
-  const hoje = Date.parse(new Date());
+
 
   const adicionaZero = (numero) => {
     if (numero <= 9)
@@ -132,7 +136,7 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
 
       </div>
 
-      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} />}
+      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} totalFechadas={valorFechadas} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} />}
       {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} contas={contas} />}
       {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token} />}
       {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
