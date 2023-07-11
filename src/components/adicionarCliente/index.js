@@ -13,7 +13,7 @@ const SignupSchema = Yup.object().shape({
     .required('Esse campo é obrigatório'),
 });
 
-export const AdicionarCliente = ({ fechar, carregandoClientes=()=>{} }) => {
+export const AdicionarCliente = ({ fechar, carregandoClientes=()=>{}, sucesso, erro }) => {
   const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
   const [novoUser, setNovoUser] = useState(false);
   const [userExistente, setUserExistente] = useState(false);
@@ -64,8 +64,8 @@ export const AdicionarCliente = ({ fechar, carregandoClientes=()=>{} }) => {
                     </Form>
                 )}
             </Formik> 
-            {novoUser && <ClienteNovoUser CPF = {cpf} fechar={fechar} carregandoClientes={carregandoClientes}/>}
-            {userExistente&& <ClienteUserExistente cliente = {dadosUsuario} fechar={fechar} carregandoClientes={carregandoClientes}/>}
+            {novoUser && <ClienteNovoUser CPF = {cpf} fechar={fechar} carregandoClientes={carregandoClientes} sucesso={sucesso} erro={erro}/>}
+            {userExistente&& <ClienteUserExistente cliente = {dadosUsuario} fechar={fechar} carregandoClientes={carregandoClientes} sucesso={sucesso} erro={erro}/>}
             
             <button className='botaoFechar' onClick={fechar}>Fechar</button>
         </div>

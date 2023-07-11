@@ -22,7 +22,7 @@ const SignupSchema = Yup.object().shape({
     .max(10, 'Número muito grande')
 });
 
-export const EditarCliente = ({ fechar=()=>{}, cliente, autorizacao }) => {
+export const EditarCliente = ({ fechar=()=>{}, cliente, autorizacao, sucesso, erro }) => {
 
   const [carregando, setCarregando] = useState(false);
 
@@ -46,9 +46,12 @@ export const EditarCliente = ({ fechar=()=>{}, cliente, autorizacao }) => {
             then((response) =>{
               setCarregando(false)
               fechar();
+              sucesso("Cliente editado com sucesso!")
             }).
-            error((err) =>{
-              alert(err)
+            cacth((err) =>{
+                setCarregando(false);
+                console.log(err.response.data.message) 
+                erro()  
             })
           }}
         >

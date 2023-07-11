@@ -7,6 +7,8 @@ import api from "../../config/api";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { SairModal } from "../../components/sairModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const Home = () => {
@@ -17,6 +19,27 @@ export const Home = () => {
     const [carregando, setCarregando] = useState(true);
     const [sairModal, setSairModal] = useState(false);
 
+    const sucesso = (menssagem) => {toast.success(menssagem, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        })}
+
+        const erro = () => {toast.error("Aconteceu um erro", {
+            position: "top-right",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            })}
 
 
     const carregandoClientes = () => {
@@ -100,8 +123,9 @@ export const Home = () => {
                 </div>
             }
             {paginaDoCliente && <ListaDeContas clienteEmpresa={paginaDoCliente} voltar={() => setPaginaDoCliente(null)} />}
-            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes} />}
+            {adicionarModal && <AdicionarCliente fechar={() => setAdicionarModal(false)} autorizacao={usuarioLogado.token} carregandoClientes={carregandoClientes} sucesso={sucesso} erro={erro} />}
             {sairModal && <SairModal fechar={() => { setSairModal(false) }} />}
+            <ToastContainer />
 
         </div>
     )

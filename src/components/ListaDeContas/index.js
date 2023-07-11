@@ -14,6 +14,10 @@ import api from '../../config/api';
 import { useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
@@ -30,6 +34,31 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
   const [excluirModal, setExcluirModal] = useState(false)
   const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
 
+  const sucesso = (menssagem) => {
+    toast.success(menssagem, {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    })
+  }
+
+  const erro = () => {
+    toast.error("Aconteceu um erro", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    })
+  }
 
   const adicionaZero = (numero) => {
     if (numero <= 9)
@@ -136,10 +165,11 @@ export const ListaDeContas = ({ clienteEmpresa, voltar }) => {
 
       </div>
 
-      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} totalFechadas={valorFechadas} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} />}
-      {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} contas={contas} />}
-      {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token} />}
-      {excluirModal && <ExcluirCliente cliente={clienteEmpresa.cliente} fechar={() => setExcluirModal(false)} />}
+      {pagamentoModal && <ModalPagamento fechar={() => setPagamentoModal(false)} dividaTotal={valorTotal} totalFechadas={valorFechadas} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} sucesso={sucesso} erro={erro}/>}
+      {compraModal && <ModalCompra fechar={() => setCompraModal(false)} clienteId={clienteEmpresa.cliente.id} empresaId={usuarioLogado.id} autorizacao={usuarioLogado.token} atualizarMovimentos={atualizarMovimentos} contas={contas} sucesso={sucesso} erro={erro}/>}
+      {editarModal && <EditarCliente fechar={() => setEditarModal(false)} cliente={clienteEmpresa.cliente} autorizacao={usuarioLogado.token} sucesso={sucesso} erro={erro}/>}
+      {excluirModal && <ExcluirCliente clienteEmpresa={clienteEmpresa} fechar={() => setExcluirModal(false)} />}
+      <ToastContainer />
 
     </div>
   );

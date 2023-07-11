@@ -9,7 +9,7 @@ const SignupSchema = Yup.object().shape({
   valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
 });
 
-export const ModalPagamento = ({ dividaTotal, totalFechadas, fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos }) => {
+export const ModalPagamento = ({ dividaTotal, totalFechadas, fechar = () =>{}, autorizacao, clienteId, empresaId, atualizarMovimentos, sucesso, erro }) => {
   const [carregando, setCarregando] = useState(false);
   return (
     <div className='envolveModal'>
@@ -39,14 +39,15 @@ export const ModalPagamento = ({ dividaTotal, totalFechadas, fechar = () =>{}, a
               console.log(response)
               setCarregando(false)
               atualizarMovimentos();
-              fechar()
+              fechar();
+              sucesso("Pagamento cadastrado!")
             }
             ).
-            error((err) =>{
-              console.log(err.data.mensage)
-              setCarregando(false)
-            }
-            )
+            cacth((err) =>{
+              setCarregando(false);
+              console.log(err.response.data.message) 
+              erro()  
+          })
           }}
         >
           {({ errors, touched }) => (

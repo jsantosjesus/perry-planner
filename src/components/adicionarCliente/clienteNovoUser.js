@@ -28,7 +28,7 @@ const SignupSchema = Yup.object().shape({
         .max(10, 'Número muito grande')
 });
 
-export const ClienteNovoUser = ({ CPF, fechar=()=>{}, carregandoClientes=()=>{} }) => {
+export const ClienteNovoUser = ({ CPF, fechar=()=>{}, carregandoClientes=()=>{}, sucesso, erro }) => {
     const [carregando, setCarregando] =useState(false);
     const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
     return (
@@ -57,16 +57,19 @@ export const ClienteNovoUser = ({ CPF, fechar=()=>{}, carregandoClientes=()=>{} 
                         empresaId: usuarioLogado.id
                     }
                     setCarregando(true);
-                    api.post(("/clientes"), valores, {headers: {'Authorization': usuarioLogado.token}}).
+                    api.post(("/clientes"), valores, {headers: {'Authorization': usuarioLogado.token }}).
                     then((response) =>{
                         console.log(response)
                         setCarregando(false);
                         fechar(); 
+                        sucesso("Cliente adicionado com sucesso!");
                         carregandoClientes();
+                        
                     }).
                     cacth((err) =>{
                         setCarregando(false);
-                        alert(err.response.data.message)   
+                        console.log(err.response.data.message) 
+                        erro();  
                     })
                 }}
             >

@@ -5,11 +5,12 @@ import * as Yup from 'yup';
 import api from '../../config/api';
 import { useState } from 'react';
 
+
 const SignupSchema = Yup.object().shape({
   valor: Yup.number('Você precisa digitar um valor').positive('Não pode ser negativo').required('Você precisa digitar um valor')
 });
 
-export const ModalCompra = ({ fechar = () => { }, autorizacao, clienteId, empresaId, atualizarMovimentos = () => { }, contas }) => {
+export const ModalCompra = ({ fechar = () => { }, autorizacao, clienteId, empresaId, atualizarMovimentos = () => { }, contas, sucesso, erro }) => {
   const [carregando, setCarregando] = useState(false);
   return (
     <div className='envolveModal'>
@@ -41,14 +42,15 @@ export const ModalCompra = ({ fechar = () => { }, autorizacao, clienteId, empres
                   window.location.reload()
                 } else {
                   atualizarMovimentos();
+                  sucesso("Compra cadastrada!");
                 }
               }
               ).
-              error((err) => {
-                console.log(err.data.mensage)
-                setCarregando(false)
-              }
-              )
+              cacth((err) =>{
+                setCarregando(false);
+                console.log(err.response.data.message) 
+                erro()  
+            })
           }}
         >
           {({ errors, touched }) => (
